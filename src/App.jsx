@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { Card, Button, Badge, Row, Col, Container } from "react-bootstrap";
 import { MyNavBar } from "./MyNavBar";
 import { Movie } from "./Movie";
+import "./index.css";
 
 export default function App() {
   // A variable that will contain a list of movies
@@ -20,9 +22,13 @@ export default function App() {
     <div className="App">
       <MyNavBar />
       {/* Loop through all movies and display each movie */}
-      {movies.map(({ id, title, description }) => (
-        <Movie key={id} title={title} description={description} />
-      ))}
+      <main className="container" style={{ maxWidth: "1200px" }}>
+        <Row>
+          {movies.map(({ id, title, description }) => (
+            <Movie key={id} title={title} description={description} />
+          ))}
+        </Row>
+      </main>
     </div>
   );
 }
