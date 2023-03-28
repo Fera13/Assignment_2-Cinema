@@ -19,13 +19,18 @@ export default function App() {
     })();
   }, []);
 
+  const categories = movies.reduce((acc, curr) => {
+    curr.description.categories.forEach((category) => acc.add(category));
+    return acc;
+  }, new Set());
+
   return (
     <div className="App">
       <MyNavBar />
 
       {/* Loop through all movies and display each movie */}
       <main className="container" style={{ maxWidth: "1200px" }}>
-        <SortAndFilter />
+        <SortAndFilter categories={categories} />
         <Row>
           {movies.map(({ id, title, description }) => (
             <Movie key={id} title={title} description={description} />
