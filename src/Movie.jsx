@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Badge, Row, Col } from "react-bootstrap";
+import { Card, Button, Badge, Col } from "react-bootstrap";
 import "./index.css";
 
 export function Movie(props) {

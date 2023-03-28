@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, Button, Badge, Row, Col, Container } from "react-bootstrap";
 import { MyNavBar } from "./MyNavBar";
 import { Movie } from "./Movie";
+import { SortAndFilter } from "./FiltersAndSorters";
 import "./index.css";
 
 export default function App() {
@@ -21,8 +22,10 @@ export default function App() {
   return (
     <div className="App">
       <MyNavBar />
+
       {/* Loop through all movies and display each movie */}
       <main className="container" style={{ maxWidth: "1200px" }}>
+        <SortAndFilter />
         <Row>
           {movies.map(({ id, title, description }) => (
             <Movie key={id} title={title} description={description} />
