@@ -7,6 +7,7 @@ export function GetAllMovies() {
   const [movies, setMovies] = useState([]);
   const [initialMovies, setInitialMovies] = useState([]);
   const [currentFilter, setCurrentFilter] = useState("All");
+  const [currentSorter, setCurrentSorter] = useState("titleAscending");
 
   useEffect(() => {
     (async () => {
@@ -30,6 +31,14 @@ export function GetAllMovies() {
     })();
   }, [currentFilter, initialMovies]);
 
+  useEffect(() => {
+    if (currentSorter === "titleAscending") {
+      movies.sort((a, b) => (a.title > b.title ? 1 : -1));
+    } else if (currentSorter === "titleDescending") {
+      movies.sort((a, b) => (a.title < b.title ? 1 : -1));
+    }
+  });
+
   const categories = initialMovies.reduce((acc, curr) => {
     curr.description.categories.forEach((category) => acc.add(category));
     return acc;
@@ -37,7 +46,11 @@ export function GetAllMovies() {
 
   return (
     <Container style={{ maxWidth: "1200px" }}>
-      <SortAndFilter categories={categories} func={setCurrentFilter} />
+      <SortAndFilter
+        categories={categories}
+        func={setCurrentFilter}
+        sortFunc={setCurrentSorter}
+      />
       <Row>
         {movies.map(({ id, title, description }) => (
           <Movie key={id} id_={id} title={title} description={description} />

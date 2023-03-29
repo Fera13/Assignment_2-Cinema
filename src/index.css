@@ -26,8 +26,7 @@ main .row:first-of-type {
 
 main {
   background-color: rgba(255, 0, 51, 0.3);
-  padding: 100px;
-  margin: 100px;
+
 }
 
 .navbar{
@@ -63,6 +62,10 @@ body {
     margin-right: 40px;
   }
 
+  main{
+    margin: 100px;
+  }
+
   #shoppingCart {
     height: 4vw;
     width: 100%;
@@ -73,9 +76,19 @@ body {
 
 @media only screen and (max-width: 992px) {
   #shoppingCart {
-    height: 8vw;
+    height: 6vw;
     width: 100%;
     border: none;
+  }
+  
+  .navbar {
+    height: 70px;
+  }
+}
+
+@media only screen and (max-width: 672px) {
+  #shoppingCart {
+    height: 8vw;
   }
 }
 
@@ -83,14 +96,18 @@ body {
   padding-top: 20px;
 }
 
-.readMore-btn{
-  border-color: gold;
+.readMore{
+  color: gold !important;
 }
 
 .fil-sort {
   margin-bottom: 100px !important;
   background-color: transparent !important;
   border: none !important;
+}
+
+.modal{
+  margin-top: 100px;
 }
 
 

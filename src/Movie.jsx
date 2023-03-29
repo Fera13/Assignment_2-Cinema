@@ -31,13 +31,12 @@ export function Movie(props) {
               </Badge>
             ))}
           </Card.Text>
-          <Button
-            className="readMore-btn border p-2"
-            variant="primary"
+          <button
+            className="readMore fw-semibold border border-warning p-2 mb-2 rounded-2 btn-primary "
             href={`viewMore/${id_}`}
           >
             Learn More
-          </Button>
+          </button>
         </Card.Body>
       </Card>
     </Col>
