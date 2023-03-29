@@ -5,35 +5,39 @@ import { SortAndFilter } from "./FiltersAndSorters";
 
 export function GetAllMovies() {
   const [movies, setMovies] = useState([]);
-  const [filter, setFilter] = useState("All");
+  const [initialMovies, setInitialMovies] = useState([]);
+  const [currentFilter, setCurrentFilter] = useState("All");
 
   useEffect(() => {
     (async () => {
-      setMovies(await (await fetch("/api/movies")).json());
+      const movieList = await (await fetch("/api/movies")).json();
+      setMovies(movieList);
+      setInitialMovies(movieList);
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      if (filter === "All") {
-        setMovies(await (await fetch("/api/movies")).json());
+      if (currentFilter === "All") {
+        setMovies(initialMovies);
         return;
       }
-      console.log(filter);
       setMovies(
-        movies.filter((movie) => movie.description.categories.includes(filter))
+        initialMovies.filter((movie) =>
+          movie.description.categories.includes(currentFilter)
+        )
       );
     })();
-  }, [filter]);
+  }, [currentFilter, initialMovies]);
 
-  const categories = movies.reduce((acc, curr) => {
+  const categories = initialMovies.reduce((acc, curr) => {
     curr.description.categories.forEach((category) => acc.add(category));
     return acc;
   }, new Set());
 
   return (
     <Container style={{ maxWidth: "1200px" }}>
-      <SortAndFilter categories={categories} func={setFilter} />
+      <SortAndFilter categories={categories} func={setCurrentFilter} />
       <Row>
         {movies.map(({ id, title, description }) => (
           <Movie key={id} id_={id} title={title} description={description} />
