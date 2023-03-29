@@ -15,9 +15,12 @@ export function SortAndFilter({ categories, func, sortFunc }) {
     <Card className="fil-sort justify-content-center">
       <Row className="row ">
         <Col className="filters position-relative">
-          <label className="fw-semibold" htmlFor="category-filter">
+          <p
+            className="soerter-filter-title fw-semibold"
+            htmlFor="category-filter"
+          >
             Filter By Category:
-          </label>
+          </p>
           <select id="category-filter" onChange={handleCategoryChange}>
             <option value="All">All</option>
             {[...categories].map((category) => (
@@ -26,9 +29,9 @@ export function SortAndFilter({ categories, func, sortFunc }) {
           </select>
         </Col>
         <Col className="sorters position-relative">
-          <label className="fw-semibold" htmlFor="all-sorts">
+          <p className="soerter-filter-title fw-semibold" htmlFor="all-sorts">
             Sort By:
-          </label>
+          </p>
           <select id="all-sorts" onChange={handleFilterChange}>
             <option value="titleAscending">Title ascending</option>
             <option value="titleDescending">Title descending</option>

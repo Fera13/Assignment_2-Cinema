@@ -33,9 +33,9 @@ export function GetAllMovies() {
 
   useEffect(() => {
     if (currentSorter === "titleAscending") {
-      movies.sort((a, b) => (a.title > b.title ? 1 : -1));
-    } else if (currentSorter === "titleDescending") {
       movies.sort((a, b) => (a.title < b.title ? 1 : -1));
+    } else if (currentSorter === "titleDescending") {
+      movies.sort((a, b) => (a.title > b.title ? 1 : -1));
     }
   });
 
