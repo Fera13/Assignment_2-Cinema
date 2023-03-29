@@ -4,7 +4,7 @@ import "./index.css";
 
 export function Movie(props) {
   // Destructure props into separate variables
-  let { title, description } = props;
+  let { title, description, id_ } = props;
   let { posterImage, categories } = description;
 
   // Add the correct domain to the image path
@@ -34,9 +34,7 @@ export function Movie(props) {
           <Button
             className="readMore-btn border p-2"
             variant="primary"
-            onClick={() => {
-              /* show modal with more info */
-            }}
+            href={`viewMore/${id_}`}
           >
             Learn More
           </Button>

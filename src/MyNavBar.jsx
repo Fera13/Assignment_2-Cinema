@@ -2,7 +2,6 @@ import { Card, Row, Col, Navbar, Container, Button } from "react-bootstrap";
 import { TicketBooking } from "./TicketChoosing.jsx";
 
 export function MyNavBar() {
-  console.log("Hello");
   return (
     <>
       <Navbar className="navbar navbar-expand-lg bg-gradient navbar-dark fixed-top">
@@ -24,7 +23,7 @@ export function MyNavBar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" id="bookshopload" href="/shop">
+                <a className="nav-link" id="bookshopload" href="/">
                   Movies
                 </a>
               </li>

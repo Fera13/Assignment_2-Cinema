@@ -10,10 +10,7 @@ export function Counter({ name }) {
   useEffect(() => {
     returnNames().then((names) => setNames(names));
   }, []);
-  console.log(names);
-  useEffect(() => {
-    console.log(counter);
-  }, [counter]);
+  useEffect(() => {}, [counter]);
   return (
     <Card className="" bg="black">
       <h1>{name}</h1>

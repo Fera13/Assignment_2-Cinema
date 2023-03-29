@@ -87,10 +87,10 @@ body {
   border-color: gold;
 }
 
-.fil-Sort {
-  margin-bottom: 1000px !important;
-  padding-bottom: 1000px !important;
-  background-color: blue;
+.fil-sort {
+  margin-bottom: 100px !important;
+  background-color: transparent !important;
+  border: none !important;
 }
 
 
