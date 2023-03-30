@@ -27,6 +27,7 @@ main .row:first-of-type {
 
 main {
   background-color: rgba(255, 0, 51, 0.461);
+  padding: 20px;
 }
 
 .navbar{
@@ -123,4 +124,30 @@ body {
   background-color: var(--primary) !important;
 }
 
+.info-cont {
+  background-image: url('/info2.jpg');
+  background-attachment: fixed;
+  padding-bottom: 40px;
+  padding-top: 15px;
+}
+
+.info{
+  text-align: left !important;
+  padding-left: 150px !important;
+  padding-top: 30px !important;
+  font-family: 'Playfair Display', serif;
+  color: rgb(102, 72, 0);
+}
+
+@media screen and (max-width: 768px) {
+  .info {
+    text-align: center !important;
+  }
+}
+
+@media screen and (max-width: 1151px) {
+  .info {
+      padding-left: 30px !important;
+    }
+}
 

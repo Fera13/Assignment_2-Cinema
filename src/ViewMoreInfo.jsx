@@ -13,8 +13,6 @@ import { useParams } from "react-router";
 export function ViewMoreInfo() {
   const { id } = useParams();
   const [pickedMovie, setPickedMovie] = useState([]);
-  let posterImage = "";
-  let categories = [];
 
   useEffect(() => {
     (async () => {
@@ -22,23 +20,23 @@ export function ViewMoreInfo() {
       const screenTimes = await (
         await fetch(`/api/screenings?movieId=${id}`)
       ).json();
-      posterImage =
-        "https://cinema-rest.nodehill.se/" + movie[0].description.posterImage;
       movie[0].screenTimes = screenTimes;
-      console.log(movie[0].screenTimes);
       setPickedMovie(movie[0]);
     })();
   }, []);
 
+  if (pickedMovie.length === 0) {
+    return <div>Loading...</div>;
+  }
   return (
-    <Container fluid>
+    <Container fluid className="info-cont rounded-5">
       <Row>
         <Col>
           <h1>{pickedMovie.title} description</h1>
         </Col>
       </Row>
       <Row>
-        <Col xs={12} md={9}>
+        <Col xs={12} md={6} className="info fs-3 fw-bold">
           <p> Movie duration: {pickedMovie.description.length} minutes</p>
           Screen times:
           {pickedMovie.screenTimes.map((screenTime) => (
@@ -47,11 +45,14 @@ export function ViewMoreInfo() {
             </p>
           ))}
         </Col>
-        <Col xs={12} md={3}>
+        <Col xs={12} md={6}>
           <Card.Img
             className="poster"
             variant="top"
-            src={posterImage}
+            src={
+              "https://cinema-rest.nodehill.se/" +
+              pickedMovie.description.posterImage
+            }
             style={{ maxHeight: "300px", objectFit: "contain" }}
           />
           <Card.Body>
