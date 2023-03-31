@@ -1,5 +1,4 @@
 import { Card, Row, Col, Navbar, Container, Button } from "react-bootstrap";
-import { TicketBooking } from "./TicketChoosing.jsx";
 
 export function MyNavBar() {
   return (
@@ -61,9 +60,7 @@ export function MyNavBar() {
             aria-label="Close"
           ></Button>
         </Card>
-        <Card className="offcanvas-body">
-          <TicketBooking />
-        </Card>
+        <Card className="offcanvas-body"></Card>
       </Card>
     </>
   );

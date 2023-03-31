@@ -9,6 +9,7 @@ import {
   Container,
 } from "react-bootstrap";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
 export function ViewMoreInfo() {
   const { id } = useParams();
@@ -28,6 +29,7 @@ export function ViewMoreInfo() {
   if (pickedMovie.length === 0) {
     return <div>Loading...</div>;
   }
+
   return (
     <Container fluid className="info-cont rounded-5">
       <Row>
@@ -36,16 +38,33 @@ export function ViewMoreInfo() {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} md={6} className="info fs-3 fw-bold">
+        <Col xs={12} md={8} className="info fs-3 fw-bold">
           <p> Movie duration: {pickedMovie.description.length} minutes</p>
           Screen times:
           {pickedMovie.screenTimes.map((screenTime) => (
-            <p className="screen-time" key={screenTime.id}>
-              {screenTime.time}
-            </p>
+            <div className="d-flex">
+              <p className="screen-time" key={screenTime.id}>
+                {new Intl.DateTimeFormat("en-UK", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                }).format(new Date(screenTime.time))}
+              </p>
+              <Link to={`/viewSeats/${screenTime.id}`}>
+                <button
+                  className="readMore-btn border p-2 rounded ms-auto"
+                  variant="primary"
+                >
+                  Buy tickets
+                </button>
+              </Link>
+            </div>
           ))}
         </Col>
-        <Col xs={12} md={6}>
+        <Col xs={12} md={4}>
           <Card.Img
             className="poster"
             variant="top"
@@ -66,9 +85,6 @@ export function ViewMoreInfo() {
                 </Badge>
               ))}
             </Card.Text>
-            <Button className="readMore-btn border p-2" variant="primary">
-              Buy tickets
-            </Button>
           </Card.Body>
         </Col>
       </Row>

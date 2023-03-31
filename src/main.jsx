@@ -4,6 +4,7 @@ import App from "./App";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
+import "./utilities/auto-key-lists";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

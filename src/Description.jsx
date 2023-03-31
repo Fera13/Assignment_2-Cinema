@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button, Badge, Col, Row } from "react-bootstrap";
-import { TicketBooking } from "./TicketChoosing";
+import { TicketBooking } from "./DisplayChairs";
 import "./index.css";
 
 export function DescriptionModal(props) {
@@ -22,9 +22,7 @@ export function DescriptionModal(props) {
           aria-label="Close"
         ></button>
       </div>
-      <div className="offcanvas-body">
-        <TicketBooking src="/parts/shoppingCart"></TicketBooking>
-      </div>
+      <div className="offcanvas-body"></div>
     </Card>
   );
 }

@@ -1,13 +1,12 @@
 import React from "react";
 import { Card, Button, Badge, Col, Container } from "react-bootstrap";
 import "./index.css";
+import { Link } from "react-router-dom";
 
 export function Movie(props) {
-  // Destructure props into separate variables
   let { title, description, id_ } = props;
   let { posterImage, categories } = description;
 
-  // Add the correct domain to the image path
   posterImage = "https://cinema-rest.nodehill.se/" + posterImage;
 
   return (
@@ -33,12 +32,11 @@ export function Movie(props) {
               </Badge>
             ))}
           </Card.Text>
-          <Button
-            className="readMore fw-semibold border border-warning p-2 mb-2 rounded-2 btn-primary"
-            href={`viewMore/${id_}`}
-          >
-            Learn More
-          </Button>
+          <Link to={`viewMore/${id_}`}>
+            <Button className="readMore fw-semibold border border-warning p-2 mb-2 rounded-2 btn-primary">
+              Learn More
+            </Button>
+          </Link>
         </Container>
       </Card>
     </Col>

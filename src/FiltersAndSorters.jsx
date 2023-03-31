@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Card, Button, Badge, Col, Row } from "react-bootstrap";
 import "./index.css";
 
