@@ -1,5 +1,16 @@
 import { useState, useEffect } from "react";
-import { Card, Button, Badge, Col, Row, Modal } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  FormLabel,
+  FormControl,
+  Button,
+  Badge,
+  Modal,
+} from "react-bootstrap";
 import { useStates } from "./utilities/states";
 import { useParams } from "react-router";
 
@@ -7,8 +18,11 @@ export function DisplaySeats() {
   const { id } = useParams();
   const s = useStates({
     screening: null,
-    moveie: null,
+    movie: null,
     seats: [],
+    numOfPeople: 1,
+    ticketTypes: [],
+    selectedSeats: [],
   });
 
   useEffect(() => {
@@ -63,21 +77,78 @@ export function DisplaySeats() {
     })();
   }, []);
 
+  const handleNumOfPeopleChange = (e) => {
+    s.numOfPeople = parseInt(e.target.value);
+  };
+
+  const handleTicketTypeChange = (index, e) => {
+    const newTicketTypes = [...s.ticketTypes];
+    newTicketTypes[index] = e.target.value;
+    s.ticketTypes = newTicketTypes;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(s.ticketTypes);
+  };
+
   function toggleSeatSelection(seat) {
     // do nothing if occupied
     if (seat.occupied) {
       return;
     }
-    // select if not selected, deselect if selected
     seat.selected = !seat.selected;
+    const getMyList = (prevSelectedSeats) => {
+      const index = prevSelectedSeats.findIndex(
+        (s) => s.seatNumber === seat.seatNumber
+      );
+      if (index >= 0) {
+        const newSelectedSeats = [...prevSelectedSeats];
+        newSelectedSeats.splice(index, 1);
+        return newSelectedSeats;
+      } else {
+        const newSelectedSeats = [
+          ...prevSelectedSeats,
+          { seatNumber: seat.seatNumber, ticketType: "adult" },
+        ];
+        return newSelectedSeats;
+      }
+    };
+    s.selectedSeats = getMyList(s.selectedSeats);
   }
 
-  // output the seats
+  const renderTicketTypeSliders = () => {
+    const ticketTypeOptions = ["Adult", "Elderly", "Child"];
+
+    return s.selectedSeats.map((seat, index) => (
+      <div key={index} className="select-role">
+        <h4>Seat {seat.seatNumber}</h4>
+        <Form>
+          <Form.Group>
+            <Form.Control
+              as="select"
+              value={seat.ticketType}
+              onChange={(e) => {
+                const newSelectedSeats = [...s.selectedSeats];
+                newSelectedSeats[index].ticketType = e.target.value;
+                s.selectedSeats = newSelectedSeats;
+              }}
+            >
+              <option value="adult">Adult</option>
+              <option value="child">Child</option>
+              <option value="elderly">Elderly</option>
+            </Form.Control>
+          </Form.Group>
+        </Form>
+      </div>
+    ));
+  };
+
   return s.seats.length === 0 ? null : (
-    <div className="screening-and-seats">
+    <div className="screening-and-seats rounded">
       <h1>{s.screening.movie}</h1>
       <h2>
-        {new Intl.DateTimeFormat("sv-SE", {
+        {new Intl.DateTimeFormat("en-UK", {
           weekday: "long",
           year: "numeric",
           month: "long",
@@ -86,32 +157,50 @@ export function DisplaySeats() {
           minute: "numeric",
         }).format(new Date(s.screening.screeningTime))}
       </h2>
-      <img
-        className="poster-screen"
-        src={
-          "https://cinema-rest.nodehill.se" + s.movie.description.posterImage
-        }
-      />
-      <div className="seats">
-        {s.seats.map((row) => (
-          <>
-            <div className="row">
-              {row.map((seat) => (
-                <div
-                  className={
-                    (seat.selected ? "selected" : "") +
-                    (seat.occupied ? " occupied" : "")
-                  }
-                  onClick={() => toggleSeatSelection(seat)}
-                >
-                  {seat.seatNumber}
-                </div>
+      <Container>
+        <Row>
+          <Col>
+            <img
+              className="poster-screen"
+              src={
+                "https://cinema-rest.nodehill.se" +
+                s.movie.description.posterImage
+              }
+            />
+          </Col>
+          <Col>
+            <div className="seats">
+              {s.seats.map((row) => (
+                <>
+                  <div className="row">
+                    {row.map((seat) => (
+                      <div
+                        className={
+                          (seat.selected ? "selected" : "") +
+                          (seat.occupied ? " occupied" : "")
+                        }
+                        onClick={() => toggleSeatSelection(seat)}
+                      >
+                        {seat.seatNumber}
+                      </div>
+                    ))}
+                  </div>
+                  <br />
+                </>
               ))}
             </div>
-            <br />
-          </>
-        ))}
-      </div>
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <Row>
+          {s.selectedSeats.length > 0 && (
+            <Col xs={12} md={6}>
+              {renderTicketTypeSliders()}
+            </Col>
+          )}
+        </Row>
+      </Container>
     </div>
   );
 }

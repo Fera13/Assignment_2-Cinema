@@ -42,7 +42,7 @@ export function ViewMoreInfo() {
           <p> Movie duration: {pickedMovie.description.length} minutes</p>
           Screen times:
           {pickedMovie.screenTimes.map((screenTime) => (
-            <div className="d-flex">
+            <div className="screaning-option border border-warning border-2 bg-opacity-20 rounded">
               <p className="screen-time" key={screenTime.id}>
                 {new Intl.DateTimeFormat("en-UK", {
                   weekday: "long",
@@ -55,7 +55,7 @@ export function ViewMoreInfo() {
               </p>
               <Link to={`/viewSeats/${screenTime.id}`}>
                 <button
-                  className="readMore-btn border p-2 rounded ms-auto"
+                  className="book-btn border border-warning btn-primary p-2 rounded ms-auto d-flex justify-content-end"
                   variant="primary"
                 >
                   Buy tickets
