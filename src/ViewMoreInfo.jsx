@@ -39,7 +39,13 @@ export function ViewMoreInfo() {
       </Row>
       <Row>
         <Col xs={12} md={8} className="info fs-3 fw-bold">
-          <p> Movie duration: {pickedMovie.description.length} minutes</p>
+          <p>
+            {" "}
+            Movie duration: {Math.floor(
+              pickedMovie.description.length / 60
+            )}{" "}
+            hour/s and {pickedMovie.description.length % 60} minute/s
+          </p>
           Screen times:
           {pickedMovie.screenTimes.map((screenTime) => (
             <div className="screaning-option border border-warning border-2 bg-opacity-20 rounded">
@@ -55,7 +61,7 @@ export function ViewMoreInfo() {
               </p>
               <Link to={`/viewSeats/${screenTime.id}`}>
                 <button
-                  className="book-btn border border-warning btn-primary p-2 rounded ms-auto d-flex justify-content-end"
+                  className="book-btn border border-warning btn-primary p-2 rounded"
                   variant="primary"
                 >
                   Buy tickets

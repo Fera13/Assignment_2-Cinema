@@ -4,6 +4,7 @@ import {
   Row,
   Col,
   Form,
+  Carousel,
   FormGroup,
   FormLabel,
   FormControl,
@@ -13,6 +14,7 @@ import {
 } from "react-bootstrap";
 import { useStates } from "./utilities/states";
 import { useParams } from "react-router";
+import { RolePick } from "./RolePick";
 
 export function DisplaySeats() {
   const { id } = useParams();
@@ -77,15 +79,11 @@ export function DisplaySeats() {
     })();
   }, []);
 
-  const handleNumOfPeopleChange = (e) => {
-    s.numOfPeople = parseInt(e.target.value);
-  };
-
-  const handleTicketTypeChange = (index, e) => {
+  /*const handleTicketTypeChange = (index, e) => {
     const newTicketTypes = [...s.ticketTypes];
     newTicketTypes[index] = e.target.value;
     s.ticketTypes = newTicketTypes;
-  };
+  };*/
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -118,30 +116,7 @@ export function DisplaySeats() {
   }
 
   const renderTicketTypeSliders = () => {
-    const ticketTypeOptions = ["Adult", "Elderly", "Child"];
-
-    return s.selectedSeats.map((seat, index) => (
-      <div key={index} className="select-role">
-        <h4>Seat {seat.seatNumber}</h4>
-        <Form>
-          <Form.Group>
-            <Form.Control
-              as="select"
-              value={seat.ticketType}
-              onChange={(e) => {
-                const newSelectedSeats = [...s.selectedSeats];
-                newSelectedSeats[index].ticketType = e.target.value;
-                s.selectedSeats = newSelectedSeats;
-              }}
-            >
-              <option value="adult">Adult</option>
-              <option value="child">Child</option>
-              <option value="elderly">Elderly</option>
-            </Form.Control>
-          </Form.Group>
-        </Form>
-      </div>
-    ));
+    return <RolePick selectedSeats={s.selectedSeats} />;
   };
 
   return s.seats.length === 0 ? null : (
@@ -199,6 +174,15 @@ export function DisplaySeats() {
               {renderTicketTypeSliders()}
             </Col>
           )}
+          <Col>
+            <h4>
+              {s.selectedSeats.length > 0 && (
+                <Col xs={12} md={6}>
+                  <h4 className="view-total"></h4>
+                </Col>
+              )}
+            </h4>
+          </Col>
         </Row>
       </Container>
     </div>
