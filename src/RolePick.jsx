@@ -14,62 +14,70 @@ import {
 } from "react-bootstrap";
 
 export function RolePick({ selectedSeats }) {
-  const [selectedTicketType, setSelectedTicketType] = useState("adult");
   const [importedSelectedSeats, setImportedSelectedSeats] =
     useState(selectedSeats);
 
-  const calculateTicketPrice = () => {
-    switch (selectedTicketType) {
+  const calculateTicketPrice = (ticketType) => {
+    switch (ticketType) {
       case "adult":
-        return { price: 85, label: "85 SEK" };
+        return 85;
       case "child":
-        return { price: 65, label: "65 SEK" };
+        return 65;
       case "elderly":
-        return { price: 75, label: "75 SEK" };
+        return 75;
       default:
-        return { price: 0, label: "Unknown" };
+        return 0;
     }
   };
 
-  const handleTicketTypeChange = (e) => {
-    setSelectedTicketType(e.target.value);
+  useEffect(() => {
     viewTotal();
+  }, [importedSelectedSeats]);
+
+  const handleTicketTypeChange = (e, index) => {
+    const newSelectedSeats = [...importedSelectedSeats];
+    newSelectedSeats[index].ticketType = e.target.value;
+    setImportedSelectedSeats(newSelectedSeats);
   };
 
   const viewTotal = () => {
     const ticketPrices = document.querySelectorAll(".ticket-price");
     let total = 0;
     for (let i = 0; i < ticketPrices.length; i++) {
-      const ticketPrice = parseInt(ticketPrices[i].price);
+      const ticketPrice = calculateTicketPrice(
+        importedSelectedSeats[i].ticketType
+      );
       if (!isNaN(ticketPrice)) {
         total += ticketPrice;
       }
     }
-    document.querySelector(".view-total").innerHTML = total + " SEK";
+    document.querySelector(".total-price").innerHTML = total + " SEK";
   };
 
-  return importedSelectedSeats.map((seat, index) => (
-    <div key={index} className="select-role">
-      <h4>Seat {seat.seatNumber}</h4>
-      <Form>
-        <Form.Group>
-          <Form.Control
-            as="select"
-            value={seat.ticketType}
-            onChange={(e) => {
-              const newSelectedSeats = [...importedSelectedSeats];
-              newSelectedSeats[index].ticketType = e.target.value;
-              setImportedSelectedSeats(newSelectedSeats);
-              handleTicketTypeChange(e);
-            }}
-          >
-            <option value="adult">Adult</option>
-            <option value="child">Child</option>
-            <option value="elderly">Elderly</option>
-          </Form.Control>
-        </Form.Group>
-      </Form>
-      <h4 className="ticket-price">{calculateTicketPrice().label}</h4>
-    </div>
-  ));
+  return (
+    <>
+      {importedSelectedSeats.map((seat, index) => (
+        <div key={index} className="select-role">
+          <h4>Seat {seat.seatNumber}</h4>
+          <Form>
+            <Form.Group>
+              <Form.Control
+                as="select"
+                value={seat.ticketType}
+                onChange={(e) => handleTicketTypeChange(e, index)}
+              >
+                <option value="adult">Adult</option>
+                <option value="child">Child</option>
+                <option value="elderly">Elderly</option>
+              </Form.Control>
+            </Form.Group>
+          </Form>
+          <h4 className="ticket-price">
+            {calculateTicketPrice(seat.ticketType)} SEK
+          </h4>
+        </div>
+      ))}
+      <h4 className="total-price"></h4>
+    </>
+  );
 }

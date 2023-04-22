@@ -1,17 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Carousel,
-  FormGroup,
-  FormLabel,
-  FormControl,
-  Button,
-  Badge,
-  Modal,
-} from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import { useStates } from "./utilities/states";
 import { useParams } from "react-router";
 import { RolePick } from "./RolePick";
@@ -23,8 +11,10 @@ export function DisplaySeats() {
     movie: null,
     seats: [],
     numOfPeople: 1,
+    numOfPeopleLeft: 1,
     ticketTypes: [],
     selectedSeats: [],
+    totalPrice: 0,
   });
 
   useEffect(() => {
@@ -79,15 +69,13 @@ export function DisplaySeats() {
     })();
   }, []);
 
-  /*const handleTicketTypeChange = (index, e) => {
-    const newTicketTypes = [...s.ticketTypes];
-    newTicketTypes[index] = e.target.value;
-    s.ticketTypes = newTicketTypes;
-  };*/
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(s.ticketTypes);
+  };
+
+  const handleNumPeopleChange = (e) => {
+    s.numOfPeople = parseInt(e.target.value);
+    s.numOfPeopleLeft = s.numOfPeople - s.selectedSeats.length;
   };
 
   function toggleSeatSelection(seat) {
@@ -95,28 +83,133 @@ export function DisplaySeats() {
     if (seat.occupied) {
       return;
     }
-    seat.selected = !seat.selected;
-    const getMyList = (prevSelectedSeats) => {
-      const index = prevSelectedSeats.findIndex(
-        (s) => s.seatNumber === seat.seatNumber
-      );
-      if (index >= 0) {
-        const newSelectedSeats = [...prevSelectedSeats];
-        newSelectedSeats.splice(index, 1);
-        return newSelectedSeats;
-      } else {
-        const newSelectedSeats = [
-          ...prevSelectedSeats,
-          { seatNumber: seat.seatNumber, ticketType: "adult" },
-        ];
-        return newSelectedSeats;
+
+    if (seat.selected) {
+      diselectSeat(seat);
+    } else {
+      selectSeat(seat);
+    }
+  }
+
+  function diselectSeat(seat) {
+    seat.selected = false;
+    seat.className = "";
+    s.numOfPeopleLeft += 1;
+    s.selectedSeats = s.selectedSeats.filter(
+      (selectedSeat) => selectedSeat.id !== seat.id
+    );
+    renderTicketTypeSliders();
+  }
+
+  function selectSeat(seat) {
+    if (s.numOfPeopleLeft <= 0) {
+      return;
+    } else if (s.numOfPeopleLeft === 0) {
+      return;
+    }
+
+    if (s.numOfPeople > 1) {
+      let leftCurrSeatInd = seat.id - 1;
+      let currentRow = seat.rowNumber;
+      let rightCurrSeatInd = seat.id + 1;
+
+      seat.selected = true;
+      seat.className = "selected";
+      s.selectedSeats.push(seat);
+      s.numOfPeopleLeft -= 1;
+      const iterationAmount = s.numOfPeopleLeft;
+      for (let i = 0; i < iterationAmount; i++) {
+        let rightCurrSeat = s.seats[seat.rowNumber - 1].find(
+          (s) => s.id === rightCurrSeatInd
+        );
+
+        if (
+          !rightCurrSeat.occupied &&
+          s.numOfPeopleLeft > 0 &&
+          rightCurrSeat.rowNumber === currentRow
+        ) {
+          s.selectedSeats.push(rightCurrSeat);
+          s.numOfPeopleLeft -= 1;
+          rightCurrSeat.selected = true;
+          rightCurrSeat.className = "selected";
+          rightCurrSeatInd += 1;
+        }
+        let leftCurrSeat = s.seats[seat.rowNumber - 1].find(
+          (s) => s.id === leftCurrSeatInd
+        );
+        if (
+          !leftCurrSeat.occupied &&
+          s.numOfPeopleLeft > 0 &&
+          leftCurrSeat.rowNumber === currentRow
+        ) {
+          s.selectedSeats.push(leftCurrSeat);
+          s.numOfPeopleLeft -= 1;
+          leftCurrSeat.selected = true;
+          leftCurrSeat.className = "selected";
+          leftCurrSeatInd -= 1;
+        }
+
+        if (s.numOfPeopleLeft === 0) {
+          break;
+        }
       }
-    };
-    s.selectedSeats = getMyList(s.selectedSeats);
+    } else {
+      seat.selected = true;
+      seat.className = "selected";
+      s.selectedSeats.push(seat);
+      s.numOfPeopleLeft -= 1;
+    }
+  }
+
+  function calculateTotalPrice() {
+    let newTickets = [];
+    for (let seat of s.selectedSeats) {
+      newTickets.push(seat.ticketType);
+    }
+    s.ticketTypes = newTickets;
+    let total = 0;
+    for (let ticket of s.ticketTypes) {
+      if (ticket === "elderly") {
+        total += 75;
+      } else if (ticket === "child") {
+        total += 65;
+      } else {
+        total += 85;
+      }
+    }
+    s.totalPrice = total;
   }
 
   const renderTicketTypeSliders = () => {
-    return <RolePick selectedSeats={s.selectedSeats} />;
+    return s.selectedSeats.map((seat, index) => (
+      <div key={index} className="select-role">
+        <h4>Seat {seat.seatNumber}</h4>
+        <Form>
+          <Form.Group>
+            <Form.Control
+              as="select"
+              value={seat.ticketType}
+              onChange={(e) => {
+                const newSelectedSeats = [...s.selectedSeats];
+                newSelectedSeats[index].ticketType = e.target.value;
+                s.selectedSeats = newSelectedSeats;
+                calculateTotalPrice();
+              }}
+            >
+              <option data-price="85" value="adult">
+                Adult
+              </option>
+              <option data-price="65" value="child">
+                Child
+              </option>
+              <option data-price="75" value="elderly">
+                Elderly
+              </option>
+            </Form.Control>
+          </Form.Group>
+        </Form>
+      </div>
+    ));
   };
 
   return s.seats.length === 0 ? null : (
@@ -145,11 +238,13 @@ export function DisplaySeats() {
           </Col>
           <Col>
             <div className="seats">
+              <h4>unseated people: {s.numOfPeopleLeft}</h4>
               {s.seats.map((row) => (
                 <>
                   <div className="row">
                     {row.map((seat) => (
                       <div
+                        id={seat.id}
                         className={
                           (seat.selected ? "selected" : "") +
                           (seat.occupied ? " occupied" : "")
@@ -169,20 +264,28 @@ export function DisplaySeats() {
       </Container>
       <Container>
         <Row>
+          <Col md={{ span: 4, offset: 4 }}>
+            <Form.Group controlId="numPeople">
+              <Form.Label>Number of people</Form.Label>
+              <Form.Control
+                type="number"
+                min="1"
+                max="10"
+                value={s.numOfPeople}
+                onChange={handleNumPeopleChange}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <Row>
           {s.selectedSeats.length > 0 && (
             <Col xs={12} md={6}>
               {renderTicketTypeSliders()}
             </Col>
           )}
-          <Col>
-            <h4>
-              {s.selectedSeats.length > 0 && (
-                <Col xs={12} md={6}>
-                  <h4 className="view-total"></h4>
-                </Col>
-              )}
-            </h4>
-          </Col>
+          <h3>Total Price: ${s.totalPrice}</h3>
         </Row>
       </Container>
     </div>
