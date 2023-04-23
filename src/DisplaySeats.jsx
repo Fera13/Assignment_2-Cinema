@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useStates } from "./utilities/states";
 import { useParams } from "react-router";
 import { ModalReceipt } from "./Componants/ModalReceipt";
+import { TicketTypeSlider } from "./Componants/TicketTypeSlider";
 
 export function DisplaySeats() {
   const { id } = useParams();
@@ -183,35 +184,12 @@ export function DisplaySeats() {
   }
 
   const renderTicketTypeSliders = () => {
-    return s.selectedSeats.map((seat, index) => (
-      <div key={index} className="select-role">
-        <h4>Seat {seat.seatNumber}</h4>
-        <Form>
-          <Form.Group>
-            <Form.Control
-              as="select"
-              value={seat.ticketType}
-              onChange={(e) => {
-                const newSelectedSeats = [...s.selectedSeats];
-                newSelectedSeats[index].ticketType = e.target.value;
-                s.selectedSeats = newSelectedSeats;
-                calculateTotalPrice();
-              }}
-            >
-              <option data-price="85" value="adult">
-                Adult
-              </option>
-              <option data-price="65" value="child">
-                Child
-              </option>
-              <option data-price="75" value="elderly">
-                Elderly
-              </option>
-            </Form.Control>
-          </Form.Group>
-        </Form>
-      </div>
-    ));
+    return (
+      <TicketTypeSlider
+        selectedSeats={s.selectedSeats}
+        calculateTotalPrice={calculateTotalPrice}
+      />
+    );
   };
 
   const handleBookButtonClick = () => {
