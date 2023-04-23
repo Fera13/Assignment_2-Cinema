@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, Button, Badge, Col, Row } from "react-bootstrap";
-import { TicketBooking } from "./DisplayChairs";
+import { Card } from "react-bootstrap";
 import "./index.css";
 
 export function DescriptionModal(props) {

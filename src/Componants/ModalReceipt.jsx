@@ -1,7 +1,5 @@
-// ModalReceipt.jsx
-
 import { generateBookingNumber } from "../utilities/generate-booking-number";
-import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 export function ModalReceipt({
   screening,

@@ -1,13 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Card,
-  Button,
-  Badge,
-  Modal,
-  Row,
-  Col,
-  Container,
-} from "react-bootstrap";
+import { Card, Badge, Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 

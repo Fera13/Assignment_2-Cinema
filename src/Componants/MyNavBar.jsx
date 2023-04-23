@@ -1,4 +1,4 @@
-import { Card, Row, Col, Navbar, Container, Button } from "react-bootstrap";
+import { Card, Navbar, Button } from "react-bootstrap";
 
 export function MyNavBar() {
   return (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Button, Badge, Row, Col, Container } from "react-bootstrap";
+import { Row, Container } from "react-bootstrap";
 import { Movie } from "./Movie";
 import { SortAndFilter } from "./FiltersAndSorters";
 

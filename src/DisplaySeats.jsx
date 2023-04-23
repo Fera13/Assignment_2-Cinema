@@ -106,8 +106,6 @@ export function DisplaySeats() {
   function selectSeat(seat) {
     if (s.numOfPeopleLeft <= 0) {
       return;
-    } else if (s.numOfPeopleLeft === 0) {
-      return;
     }
 
     if (s.numOfPeople > 1) {

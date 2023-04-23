@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 export function TicketTypeSlider({ selectedSeats, calculateTotalPrice }) {
   return (

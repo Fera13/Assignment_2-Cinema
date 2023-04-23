@@ -1,4 +1,4 @@
-import { Card, Button, Badge, Col, Row } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 import "./index.css";
 
 export function SortAndFilter({ categories, func, sortFunc }) {

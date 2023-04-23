@@ -26,7 +26,6 @@ main .row:first-of-type {
 }
 
 main {
-  /*background-image: url('/2ndBG2.jpg');*/
   background-size: cover;
   background-attachment: fixed;
   background-color: rgba(255, 0, 51, 0.5);
