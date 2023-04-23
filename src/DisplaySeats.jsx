@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useStates } from "./utilities/states";
 import { useParams } from "react-router";
+import { ModalReceipt } from "./Componants/ModalReceipt";
 
 export function DisplaySeats() {
   const { id } = useParams();
+  const [showModal, setShowModal] = useState(false);
   const s = useStates({
     screening: null,
     movie: null,
@@ -212,6 +214,14 @@ export function DisplaySeats() {
     ));
   };
 
+  const handleBookButtonClick = () => {
+    if (s.selectedSeats.length === 0) {
+      alert("No seats were selected!");
+    } else {
+      setShowModal(true);
+    }
+  };
+
   return s.seats.length === 0 ? null : (
     <div className="screening-and-seats rounded">
       <h1>{s.screening.movie}</h1>
@@ -272,7 +282,7 @@ export function DisplaySeats() {
           </Col>
           <Col id="num-of-ppl" md={{ span: 3 }}>
             <Form.Group controlId="numPeople">
-              <Form.Label>Number of people</Form.Label>
+              <h4>Number of people</h4>
               <Form.Control
                 type="number"
                 min="1"
@@ -292,7 +302,24 @@ export function DisplaySeats() {
             </Col>
           )}
         </Row>
-        <h3>Total Price: ${s.totalPrice}</h3>
+        <Row>
+          <Col>
+            <h3>Total Price: {s.totalPrice} Kr</h3>
+          </Col>
+          <Col>
+            <Button className="show-receipt" onClick={handleBookButtonClick}>
+              Book
+            </Button>
+          </Col>
+        </Row>
+        {showModal && (
+          <ModalReceipt
+            screening={s.screening}
+            totalPrice={s.totalPrice}
+            selectedSeats={s.selectedSeats}
+            onClose={() => setShowModal(false)}
+          />
+        )}
       </Container>
     </div>
   );

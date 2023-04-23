@@ -28,7 +28,7 @@ export function MyNavBar() {
               </li>
             </ul>
             <Button
-              className="cartBtn cartBtn float-end bg-gradient btn btn-primary"
+              className="cartBtn float-end bg-gradient btn btn-primary"
               type="button"
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasRight"

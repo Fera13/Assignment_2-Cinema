@@ -1,5 +1,4 @@
-import { Card, Button, Badge, Row, Col, Container } from "react-bootstrap";
-import { MyNavBar } from "./MyNavBar";
+import { MyNavBar } from "./Componants/MyNavBar";
 import { GetAllMovies } from "./AllMovies";
 import { ViewMoreInfo } from "./ViewMoreInfo";
 import "./index.css";
