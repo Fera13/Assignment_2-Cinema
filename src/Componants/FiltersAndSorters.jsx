@@ -1,5 +1,5 @@
 import { Card, Col, Row } from "react-bootstrap";
-import "./index.css";
+import "../index.css";
 
 export function SortAndFilter({ categories, func, sortFunc }) {
   const handleCategoryChange = (event) => {

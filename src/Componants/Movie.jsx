@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button, Badge, Col, Container } from "react-bootstrap";
-import "./index.css";
+import "../index.css";
 import { Link } from "react-router-dom";
 
 export function Movie(props) {

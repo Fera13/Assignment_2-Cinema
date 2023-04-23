@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Row, Container } from "react-bootstrap";
-import { Movie } from "./Movie";
+import { Movie } from "./Componants/Movie";
 import { SortAndFilter } from "./FiltersAndSorters";
 
 export function GetAllMovies() {
