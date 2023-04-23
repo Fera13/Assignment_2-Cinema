@@ -8,7 +8,7 @@ export function ModalReceipt({
   onClose,
 }) {
   return (
-    <Modal show={true} onHide={onClose}>
+    <Modal className="modal" show={true} onHide={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>Booking Receipt</Modal.Title>
       </Modal.Header>

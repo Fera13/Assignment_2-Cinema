@@ -43,25 +43,6 @@ export function MyNavBar() {
           </div>
         </div>
       </Navbar>
-      <Card
-        className="offcanvas offcanvas-end"
-        tabindex="-1"
-        id="offcanvasRight"
-        aria-labelledby="offcanvasRightLabel"
-      >
-        <Card className="offcanvas-header">
-          <h5 className="offcanvas-title" id="offcanvasRightLabel">
-            Cart
-          </h5>
-          <Button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></Button>
-        </Card>
-        <Card className="offcanvas-body"></Card>
-      </Card>
     </>
   );
 }

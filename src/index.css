@@ -36,7 +36,7 @@ main {
   background-color: rgb(0, 0, 0)
 }
 
-body {
+body{
   background-image: url('/Background.jpg');
   background-size: cover;
   background-attachment: fixed;
@@ -127,7 +127,8 @@ body {
   background-color: var(--primary) !important;
 }
 
-.info-cont {
+.info-cont, .modal-footer, .modal-body,
+.modal-header {
   background-image: url('/info.jpg');
   color: rgb(255, 191, 0);
   background-attachment: fixed;
