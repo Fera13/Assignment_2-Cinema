@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { generateBookingNumber } from "../utilities/generate-booking-number";
 import { Button, Modal } from "react-bootstrap";
 
@@ -7,6 +8,16 @@ export function ModalReceipt({
   totalPrice,
   onClose,
 }) {
+  const [rowNumbers, setRowNumbers] = useState([]);
+
+  useEffect(() => {
+    let tempRows = [];
+    for (let seat of selectedSeats) {
+      tempRows.push(seat.rowNumber);
+    }
+    setRowNumbers(tempRows);
+  }, []);
+
   return (
     <Modal className="modal" show={true} onHide={onClose}>
       <Modal.Header closeButton>
@@ -18,8 +29,10 @@ export function ModalReceipt({
         </p>
         <p>Selected Seats:</p>
         <ul>
-          {selectedSeats.map((seat) => (
-            <li key={seat.id}>{seat.id}</li>
+          {selectedSeats.map((seat, index) => (
+            <li key={seat.id}>
+              Row {rowNumbers[index]} - Seat number {seat.id}
+            </li>
           ))}
         </ul>
         <p>Total Price: {totalPrice} Kr</p>

@@ -4,6 +4,7 @@ import { ViewMoreInfo } from "./ViewMoreInfo";
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import { DisplaySeats } from "./DisplaySeats";
+import { Footer } from "./Componants/Footer";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="viewSeats/:id" element={<DisplaySeats />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   );
 }

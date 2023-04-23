@@ -32,7 +32,7 @@ main {
   padding: 20px;
 }
 
-.navbar{
+.navbar, .footer{
   background-color: rgb(0, 0, 0)
 }
 
