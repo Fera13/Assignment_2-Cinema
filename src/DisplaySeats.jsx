@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { useStates } from "./utilities/states";
 import { useParams } from "react-router";
-import { RolePick } from "./RolePick";
 
 export function DisplaySeats() {
   const { id } = useParams();
@@ -159,6 +158,7 @@ export function DisplaySeats() {
       s.selectedSeats.push(seat);
       s.numOfPeopleLeft -= 1;
     }
+    calculateTotalPrice();
   }
 
   function calculateTotalPrice() {
@@ -263,8 +263,14 @@ export function DisplaySeats() {
         </Row>
       </Container>
       <Container>
-        <Row>
-          <Col md={{ span: 4, offset: 4 }}>
+        <Row className="align-items-center">
+          <Col xs={12} md={6}>
+            <h3>Ticket Prices</h3>
+            <p>Adults: 85 Kr</p>
+            <p>Children: 65 Kr</p>
+            <p>Elderly: 75 Kr</p>
+          </Col>
+          <Col id="num-of-ppl" md={{ span: 3 }}>
             <Form.Group controlId="numPeople">
               <Form.Label>Number of people</Form.Label>
               <Form.Control
@@ -279,14 +285,14 @@ export function DisplaySeats() {
         </Row>
       </Container>
       <Container>
-        <Row>
+        <Row className="justify-content-center">
           {s.selectedSeats.length > 0 && (
             <Col xs={12} md={6}>
               {renderTicketTypeSliders()}
             </Col>
           )}
-          <h3>Total Price: ${s.totalPrice}</h3>
         </Row>
+        <h3>Total Price: ${s.totalPrice}</h3>
       </Container>
     </div>
   );

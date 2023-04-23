@@ -144,16 +144,30 @@ body {
   font-family: 'Playfair Display', serif;
 }
 
-@media screen and (max-width: 768px) {
-  .info {
-    text-align: center !important;
-  }
-}
+
 
 @media screen and (max-width: 1151px) {
   .info {
       padding-left: 30px !important;
     }
+}
+
+@media screen and (max-width: 1256px) {
+  #num-of-ppl {
+    margin-left: 70px !important;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .info {
+    text-align: center !important;
+  }
+
+  #num-of-ppl {
+    margin-left: 0px !important;
+    align-items: center;
+  }
 }
 
 .screening-and-seats {
@@ -221,4 +235,13 @@ body {
 
 .screaning-option, .select-role{
   margin-bottom: 16px;
+}
+
+.select-role{
+  margin-right: 15px;
+  display: inline-block;
+}
+
+#num-of-ppl{
+  margin-left: 170px;
 }
